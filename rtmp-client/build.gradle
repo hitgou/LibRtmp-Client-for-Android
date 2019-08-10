@@ -2,12 +2,12 @@ apply plugin: "com.android.library"
 
 
 android {
-    compileSdkVersion  21 // sdk level 21 lets ndk generate resources for archs such as arm64.
-    buildToolsVersion  "27.0.3"
+    compileSdkVersion 27 // sdk level 21 lets ndk generate resources for archs such as arm64.
+    buildToolsVersion "28.0.3"
     defaultConfig {
         // applicationId "io.antmedia.rtmpclient"
-        minSdkVersion 15
-        targetSdkVersion 15
+        minSdkVersion 21
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -15,16 +15,18 @@ android {
             cmake {
                 cppFlags "-frtti -fexceptions"
                 arguments '-DANDROID_PLATFORM=android-15'
-                abiFilters 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'mips', 'mips64'
+//                abiFilters 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'mips', 'mips64'
+                abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
             }
+        }
+        ndk {
+            abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
         }
     }
 
-
-
     buildTypes {
         release {
-            minifyEnabled  false
+            minifyEnabled false
             proguardFiles.add(file("proguard-rules.pro"))
         }
     }
@@ -37,25 +39,21 @@ android {
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
-
         }
     }
 }
 
 
-
-
 //android.
 //ndk {
 //    moduleName = "rtmp-jni"
-    // cppFlags.addAll(["-I${file("src/main/jni/native_app_glue")}".toString(),
-    //                  "-I${file("src/main/jni/cpufeatures")}".toString(),
-    //                 "-I${file("src/main/jni/ndk_helper")}".toString()])
-    // CFlags is configured in similar way as cppFlags
+// cppFlags.addAll(["-I${file("src/main/jni/native_app_glue")}".toString(),
+//                  "-I${file("src/main/jni/cpufeatures")}".toString(),
+//                 "-I${file("src/main/jni/ndk_helper")}".toString()])
+// CFlags is configured in similar way as cppFlags
 //    CFlags.add("-DNO_CRYPTO".toString())
 //    CFlags.add("-I${file("src/main/jni/librtmp")}".toString())
 //    ldLibs.add("log")
-
 
 
 //}
@@ -85,7 +83,6 @@ android.productFlavors {
 
 
 }
-
 
 
 ext {
